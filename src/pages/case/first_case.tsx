@@ -1,5 +1,6 @@
 import Layout from '@/Components/layout'; // adjust the path if needed
 import dynamic from 'next/dynamic';
+
 // SSR-safe import
 const Tippy = dynamic(() => import('@tippyjs/react'), { ssr: false });
 
@@ -15,7 +16,7 @@ export default function Home() {
 
           <h2 className="text-xl font-semibold mb-2">Case Overview</h2>
           <p>Case: 78 Year old femal comes in complaining of SOB and right-sided chest pain. Has been going on for 3 hours and is associated with nausea.</p>
-           
+
         <p>
             <Tippy 
             theme="light-border"
@@ -25,16 +26,40 @@ export default function Home() {
                 <span className = "underline cursor-help">Gait</span>
             </Tippy>
         </p>
-
         
-        </div>
+        {/*Video*/}
+    <div className ="p-4"></div>
+      <div className= "w-full max-w-xl aspect-video rounded-2xl overflow-hidden shadow-lg border border-[#3a3b3c]">
+      <iframe
+        className="w-full h-full"
+        src="https://www.youtube.com/embed/hxvhCubYGrE?si=kfYCQJBuNj26plkR"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      ></iframe>
+    </div>
+  
 
+        {/* Images */}
+        <div className ="flex items-start space-x-4 p-2">
+          <img src ="/Images/oldwoman.jpg" 
+          alt="Old Woman Button" 
+          className="w-64 h-50 rounded-md object-cover"/>
+        <p className = "text-sm" >
+        On her wrist is a bracelet with a red button.
+        </p>
+      </div>
+      </div>
         {/* Right Box */}
-        <div className="lg:w-[60%] h-full border border-[#3a3b3c] p-6 pb-6 rounded-md bg-[#3a3b3c] shadow-sm flex flex-col w-[50%]">
-        <h2 className="text-xl font-semibold mb-4">Questions</h2>
+        <div className="lg:w-[60%] w-[50%] h-full relative border border-[#3a3b3c] p-6 pb-20 rounded-md bg-[#3a3b3c] shadow-sm flex flex-col">
+          <div className="flex flex-col gap-y-4">
+
+        <h2 className="text-xl font-semibold mb-4">Question 1</h2>
 
         {/* intial Thoughts */}
-        <div className="mb-6">
+        <div className="mb-6 text-black">
             <label htmlFor="thoughts" className="block text-xl font-medium">
             1. What is your initial thoughts?
             </label>
@@ -45,29 +70,29 @@ export default function Home() {
             />
         </div>
 
-        {/* Multi-select Dropdown */}
+        {/* Multi-select Dropdown with Search*/}
         <div>
-        <label className = "block text-base font-medium mb-1">
-          Examinations (can tick multiple boxes)
-        </label>
-        <select
-          multiple
-          className ="w-full border border-[#FFFFF] bg-[#FFFFF] rounded-md p-2 h-32 text-[#000000]"
-          >
-            <option> Cardiology </option>
-            <option> Respiratory </option>
-            <option> Abdominal </option>
-            <option> Neurology </option>          
-          </select>
-        </div>
+          <label className = "block text-base font-medium mb-1 text-white">
+            Examinations (can tick multiple boxes)
+          </label>
 
-        {/* Search Input */}
-        <div>
+          <div className = "w-full border border-white bg-white rounded-md p-2 text-black flex flex-col">
+
+            {/* Checkboxes */}
+            <div className="overflow-y-auto flex flex-col space-y-1 text-[#000000]">
+              <div> <input type = "checkbox"/> Cardiology </div>
+              <div> <input type = "checkbox"/> Respitory </div>
+              <div> <input type = "checkbox"/> Abdominal </div>
+              <div> <input type = "checkbox"/> Neurology </div>
+            </div>
+          
+
+          {/* Search bar now inside the box at the bottom */}
           <input
-          type = "text"
-          className = "w-full border border-gray-300 rounded-md p-2"
-          placeholder = "search"
-          />
+            type = "text"
+            className = "w-full border border-gray-300 rounded-md p-1 text-black mt-2"
+            placeholder = "Search..."
+            />
         </div>
 
         {/* Selected Items */}
@@ -75,7 +100,7 @@ export default function Home() {
           <label className = "block text-base font-medium mb-1">
             Selected
           </label>
-          <div className = "border border-gray-300 rounded-md p-2 min-h-[40px] text-sm">
+          <div className = "border border-gray-300 rounded-md p-2 min-h-[40px] text-sm bg-[#FFFFFF] text-[#000000]">
             Cardiology, Abdominal, Neurology
           </div>
         </div>
@@ -84,17 +109,19 @@ export default function Home() {
         <div className = "text-sm">
           Abdominal and Neurology is not needed in this scenario. (Expand Text with AI?)
         </div>
-
-        {/* Buttons */}
-        <div className = "mt-auto flex justify-between pt-4">
-          <button className = "px-4 py-2 bg-gray-200 text-gray-800 rounded">Back</button>
-          <div className = "flex gap-2">
-            <button className = "px-4 py-2 bg-blue-600 text-white rounded"> Proceed</button>
-            <button className = "px-4 py-2 bg-blue-600 text-white rounded"> Submit</button>
-          </div>
+      
+        {/* Submit Button */}
+        <div className = "mt-4">
+          <button className = "px-4 py-2 bg-blue-600 text-white rounded">Submit</button>
+        </div>
+      </div>
+        {/* Proceed Button*/}
+        <div className="absolute bottom-4 right-4">
+          <button className="px-4 py-2 bg-blue-600 text-white rounded">Proceed</button>
         </div>
         </div>
       </div>
+    </div>
     </Layout>
   );
 }
