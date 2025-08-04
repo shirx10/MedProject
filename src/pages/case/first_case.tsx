@@ -1,16 +1,37 @@
 import Layout from '@/Components/layout'; // adjust the path if needed
 import dynamic from 'next/dynamic';
+import React, { useState } from 'react';
+import Sidebar from '@/Components/sidebar';
 
 // SSR-safe import
 const Tippy = dynamic(() => import('@tippyjs/react'), { ssr: false });
 
 
-
 export default function Home() {
+  const[SelectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  const [validationMessage, setValidationMessage] = useState<string | null>(null);
+
+  
+  const options = ['Cardiology', 'Respitory', 'Abdominal', 'Neurology'];
+
+  const toggleOptions = (option: string) => {
+    setSelectedOptions((prev) =>
+      prev.includes(option)
+      ? prev.filter((item) => item !== option)
+      : [...prev, option]);
+
+  
+  <main className="Home">
+    <Sidebar></Sidebar>
+    </main>    
+  };
   return (
     <Layout>
       {/* The general layout parameters*/}
       <div className="flex flex-col lg:flex-row w-[100%] h-[calc(100vh-64px)] gap-6 p-10 pt-20">
+
+        
         {/* Left Box */}
         <div className="w-[50%] lg:w-[40%] h-full border border-[#3a3b3c] p-12 rounded-md bg-[#3a3b3c] shadow-sm">
 
@@ -26,6 +47,7 @@ export default function Home() {
                 <span className = "underline cursor-help">Gait</span>
             </Tippy>
         </p>
+        
         
         {/*Video*/}
     <div className ="p-4"></div>
@@ -80,12 +102,19 @@ export default function Home() {
 
             {/* Checkboxes */}
             <div className="overflow-y-auto flex flex-col space-y-1 text-[#000000]">
-              <div> <input type = "checkbox"/> Cardiology </div>
-              <div> <input type = "checkbox"/> Respitory </div>
-              <div> <input type = "checkbox"/> Abdominal </div>
-              <div> <input type = "checkbox"/> Neurology </div>
-            </div>
-          
+              {options.map((option) => (
+                <label key={option} className = "flex items-center space-x-2">
+                  <input
+                    type = "checkbox"
+                    checked = {SelectedOptions.includes(option)}
+                    onChange = {() => toggleOptions(option)}
+                    />
+                    <span className="text-black"> {option}</span>
+                  </label>
+                ))}
+                </div>
+                
+              
 
           {/* Search bar now inside the box at the bottom */}
           <input
@@ -101,7 +130,7 @@ export default function Home() {
             Selected
           </label>
           <div className = "border border-gray-300 rounded-md p-2 min-h-[40px] text-sm bg-[#FFFFFF] text-[#000000]">
-            Cardiology, Abdominal, Neurology
+            {SelectedOptions.join(', ') || 'None'}
           </div>
         </div>
 
@@ -112,16 +141,43 @@ export default function Home() {
       
         {/* Submit Button */}
         <div className = "mt-4">
-          <button className = "px-4 py-2 bg-blue-600 text-white rounded">Submit</button>
+          <button
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
+            onClick = {() => {
+              const correctAnswers = ['Cardiology', 'Respitory'];
+              const isCorrect =
+                SelectedOptions.length === correctAnswers.length &&
+                correctAnswers.every(opt => SelectedOptions.includes(opt));
+
+              if (isCorrect){
+                setValidationMessage('You are correct!');
+              }
+
+              else{
+                setValidationMessage(
+                  'Incorrect, Abdominal and Neurology is not needed in this scenario. (Expand Text with AI?)'
+                );
+              }
+            }}
+          >
+          Submit</button>
+            {/* Validation Message */}
+            {validationMessage && (
+              <div className="mt-2 text-sm text-white">
+                {validationMessage}
+              </div>
+            )}
+          </div>
+            
+            
         </div>
       </div>
         {/* Proceed Button*/}
         <div className="absolute bottom-4 right-4">
-          <button className="px-4 py-2 bg-blue-600 text-white rounded">Proceed</button>
+          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">Proceed</button>
         </div>
         </div>
       </div>
-    </div>
     </Layout>
   );
 }
