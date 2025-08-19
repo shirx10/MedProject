@@ -29,26 +29,16 @@ Clone the repository:
 git clone https://github.com/yourusername/medproject.git
 cd medproject
 
-
 Install dependencies:
 
 npm install
-
 
 Run the development server:
 
 npm run dev
 
-
 Open http://localhost:3000
  to view the project.
-
-Project Structure
-medproject/
-  ├── pages/          # Main Next.js pages
-  ├── components/     # Reusable React components
-  ├── public/images/  # Static assets
-  ├── styles/         # Global styles (Tailwind + custom CSS)
 
 Roadmap
 
