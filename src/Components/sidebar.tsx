@@ -1,31 +1,26 @@
-import { ChevronFirst }  from "lucide-react";
+import { ChevronFirst } from 'lucide-react';
 
 interface SidebarProps {
-    className?: string;
+  className?: string;
 }
 
-export default function Sidebar({className = ""}: SidebarProps) {
-    return(
-        <aside className = "h-screen">  
-            <nav className = "h-[90%] flex flex-col bg-gray-700 ">
-                <div className="p-4  pb-2 flex justify-between items-center">
-                    <img src="/images/med.png" className="w-32"/>
-                    <button className = "p1.5 rounded-lg bg-gray-50 hover:bg-gray-100">
-                        <ChevronFirst/>
-                        </button>
+export default function Sidebar({ className = '' }: SidebarProps) {
+  return (
+    <aside
+      className={`bg-gray-800 text-white flex flex-col items-center w-56 shrink-0 h-screen sticky top-0 ${className}`}
+    >
+      <img src="/images/med.png" alt="logo" className="w-32 mt-6 mb-8" />
 
-                </div>
-                <ul className = "flex-1 px-3">{}</ul>
-                <div className ="border-t flex p-3">
-                    <img
-                    src=""
-                    alt="Something app stuff"
-                    />
-                </div>
-            </nav>    
-            
+      {/* ⬇️ nav items */}
+      <nav className="flex flex-col gap-4 text-sm">
+        <a href="#" className="hover:text-blue-400">Question 1</a>
+        <a href="#" className="hover:text-blue-400">Question 2</a>
+        <a href="#" className="hover:text-blue-400">Question 3</a>
+      </nav>
 
-        </aside>
-
-    )
+      <button className="mt-auto mb-6 p-2 rounded hover:bg-gray-700">
+        <ChevronFirst size={20} />
+      </button>
+    </aside>
+  );
 }

@@ -1,182 +1,153 @@
-import Layout from '@/Components/layout'; // adjust the path if needed
-import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
-import Sidebar from '@/Components/sidebar';
+import dynamic from 'next/dynamic';
+import Layout from '@/Components/layout';
 
-// SSR-safe import
+// ─── lazy-load Tippy (no-SSR) ─────────────────────────────────────────
 const Tippy = dynamic(() => import('@tippyjs/react'), { ssr: false });
 
-
-export default function Home() {
-  const[SelectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  const [validationMessage, setValidationMessage] = useState<string | null>(null);
-
-  
+export default function FirstCase() {
+  /* state */
+  const [selected, setSelected]         = useState<string[]>([]);
+  const [validation, setValidation]     = useState<string | null>(null);
   const options = ['Cardiology', 'Respitory', 'Abdominal', 'Neurology'];
 
-  const toggleOptions = (option: string) => {
-    setSelectedOptions((prev) =>
-      prev.includes(option)
-      ? prev.filter((item) => item !== option)
-      : [...prev, option]);
+  const toggle = (opt: string) =>
+    setSelected(prev =>
+      prev.includes(opt) ? prev.filter(x => x !== opt) : [...prev, opt]
+    );
 
-  
-  <main className="Home">
-    <Sidebar></Sidebar>
-    </main>    
-  };
+  /* render */
   return (
     <Layout>
-      {/* The general layout parameters*/}
-      <div className="flex flex-col lg:flex-row w-[100%] h-[calc(100vh-64px)] gap-6 p-10 pt-20">
+      <div className="grid grid-cols-[540px_1fr] gap-12 max-w-7xl mx-auto ">
 
-        
-        {/* Left Box */}
-        <div className="w-[50%] lg:w-[40%] h-full border border-[#3a3b3c] p-12 rounded-md bg-[#3a3b3c] shadow-sm">
+        {/* Left Side*/}
+        <section className="bg-[#1b1c1a] text-white rounded-2xl p-12 space-y-6 mt-12">
 
-          <h2 className="text-xl font-semibold mb-2">Case Overview</h2>
-          <p>Case: 78 Year old femal comes in complaining of SOB and right-sided chest pain. Has been going on for 3 hours and is associated with nausea.</p>
 
-        <p>
-            <Tippy 
-            theme="light-border"
-            content="The manner or style of walking. "
-            placement="bottom"
-            >
-                <span className = "underline cursor-help">Gait</span>
-            </Tippy>
-        </p>
-        
-        
-        {/*Video*/}
-    <div className ="p-4"></div>
-      <div className= "w-full max-w-xl aspect-video rounded-2xl overflow-hidden shadow-lg border border-[#3a3b3c]">
-      <iframe
-        className="w-full h-full"
-        src="https://www.youtube.com/embed/hxvhCubYGrE?si=kfYCQJBuNj26plkR"
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-      ></iframe>
-    </div>
-  
 
-        {/* Images */}
-        <div className ="flex items-start space-x-4 p-2">
-          <img src ="/Images/oldwoman.jpg" 
-          alt="Old Woman Button" 
-          className="w-64 h-50 rounded-md object-cover"/>
-        <p className = "text-sm" >
-        On her wrist is a bracelet with a red button.
-        </p>
-      </div>
-      </div>
-        {/* Right Box */}
-        <div className="lg:w-[60%] w-[50%] h-full relative border border-[#3a3b3c] p-6 pb-20 rounded-md bg-[#3a3b3c] shadow-sm flex flex-col">
-          <div className="flex flex-col gap-y-4">
+          <h2 className="text-2xl font-semibol">Case Overview</h2>
 
-        <h2 className="text-xl font-semibold mb-4">Question 1</h2>
+          <p>
+            Case:&nbsp;78&nbsp;year-old female complaining of SOB and right-sided
+            chest pain for 3&nbsp;hours, associated with nausea.
+          </p>
 
-        {/* intial Thoughts */}
-        <div className="mb-6 text-black">
-            <label htmlFor="thoughts" className="block text-xl font-medium">
-            1. What is your initial thoughts?
+          <Tippy theme="light-border" content="The manner or style of walking">
+            <span className="underline cursor-help text-blue-400">Gait</span>
+          </Tippy>
+
+          {/* video */}
+          <div className="aspect-video rounded-lg overflow-hidden shadow">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/hxvhCubYGrE?si=kfYCQJBuNj26plkR"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+
+          {/* image & caption */}
+          <div className="flex gap-4">
+            <img
+              src="/Images/oldwoman.jpg"
+              alt="Old woman with bracelet button"
+              className="w-40 rounded-md object-cover"
+            />
+            <p className="text-sm self-center">
+              On her wrist is a bracelet with a red button.
+            </p>
+          </div>
+        </section>
+
+        {/* Right Side */}
+        <section className="p-3 space-y-6 mt-12 mx-5">
+
+
+          <h2 className=" text-2xl font-semibold">Question&nbsp;1</h2>
+
+          {/* initial thoughts */}
+          <div>
+            <label htmlFor="thoughts" className="block mb-2">
+              1.&nbsp;What is your initial thoughts?
             </label>
             <input
-            id="thoughts"
-            className="mt-2 block w-full border border-[#FFFFFF]   rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Write your answer here..."
+              id="thoughts"
+              placeholder="Write your answer here…"
+              className="w-full rounded border border-white/40 px-3 py-2 text-black"
             />
-        </div>
+          </div>
 
-        {/* Multi-select Dropdown with Search*/}
-        <div>
-          <label className = "block text-base font-medium mb-1 text-white">
-            Examinations (can tick multiple boxes)
-          </label>
+          {/* check-box list */}
+          <div>
+            <label className="block mb-2">
+              Examinations (can tick multiple boxes)
+            </label>
 
-          <div className = "w-full border border-white bg-white rounded-md p-2 text-black flex flex-col">
-
-            {/* Checkboxes */}
-            <div className="overflow-y-auto flex flex-col space-y-1 text-[#000000]">
-              {options.map((option) => (
-                <label key={option} className = "flex items-center space-x-2">
+            <div className="border border-white/40 rounded-lg bg-white p-3 text-black space-y-1">
+              {options.map(opt => (
+                <label key={opt} className="flex items-center gap-2 text-black">
                   <input
-                    type = "checkbox"
-                    checked = {SelectedOptions.includes(option)}
-                    onChange = {() => toggleOptions(option)}
-                    />
-                    <span className="text-black"> {option}</span>
-                  </label>
-                ))}
-                </div>
-                
-              
+                    type="checkbox"
+                    checked={selected.includes(opt)}
+                    onChange={() => toggle(opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
 
-          {/* Search bar now inside the box at the bottom */}
-          <input
-            type = "text"
-            className = "w-full border border-gray-300 rounded-md p-1 text-black mt-2"
-            placeholder = "Search..."
-            />
-        </div>
-
-        {/* Selected Items */}
-        <div>
-          <label className = "block text-base font-medium mb-1">
-            Selected
-          </label>
-          <div className = "border border-gray-300 rounded-md p-2 min-h-[40px] text-sm bg-[#FFFFFF] text-[#000000]">
-            {SelectedOptions.join(', ') || 'None'}
+              {/* search stub */}
+              <input
+                type="text"
+                disabled
+                placeholder="Search…"
+                className="mt-2 w-full rounded border p-1 text-gray-500 cursor-not-allowed"
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Information Note */}
-        <div className = "text-sm">
-          Abdominal and Neurology is not needed in this scenario. (Expand Text with AI?)
-        </div>
-      
-        {/* Submit Button */}
-        <div className = "mt-4">
-          <button
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
-            onClick = {() => {
-              const correctAnswers = ['Cardiology', 'Respitory'];
-              const isCorrect =
-                SelectedOptions.length === correctAnswers.length &&
-                correctAnswers.every(opt => SelectedOptions.includes(opt));
+          {/* selected list */}
+          <div>
+            <label className="block mb-1">Selected</label>
+            <div className="bg-white text-black rounded px-3 py-2">
+              {selected.length ? selected.join(', ') : 'None'}
+            </div>
+          </div>
 
-              if (isCorrect){
-                setValidationMessage('You are correct!');
-              }
+          {/* validation / helper text */}
+          <p className="text-sm min-h-[1.25rem] text-red-300">
+            {validation || '\u00A0'}
+          </p>
 
-              else{
-                setValidationMessage(
-                  'Incorrect, Abdominal and Neurology is not needed in this scenario. (Expand Text with AI?)'
+
+
+          {/* buttons */}
+          <div className="flex justify-between items-end pt-4">
+            <button
+              onClick={() => {
+                /* Validate */
+                const correct = ['Cardiology', 'Respitory'];
+                const ok =
+                  selected.length === correct.length &&
+                  correct.every(o => selected.includes(o));
+
+                setValidation(
+                  ok
+                    ? 'You are correct!'
+                    : 'Incorrect, Abdominal and Neurology are not needed here.'
                 );
-              }
-            }}
-          >
-          Submit</button>
-            {/* Validation Message */}
-            {validationMessage && (
-              <div className="mt-2 text-sm text-white">
-                {validationMessage}
-              </div>
-            )}
+              }}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded self-start"
+            >
+              Submit
+            </button>
+
+            <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded">
+              Proceed
+            </button>
           </div>
-            
-            
-        </div>
-      </div>
-        {/* Proceed Button*/}
-        <div className="absolute bottom-4 right-4">
-          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">Proceed</button>
-        </div>
-        </div>
+        </section>
       </div>
     </Layout>
   );

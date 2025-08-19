@@ -5,6 +5,20 @@
 @import "tippy.js/dist/tippy.css";
 
 :root {
+  --bg-main: #1e1f22;
+  --bg-panel: #2a2c30;
+  --text-main: #ffffff;
+}
+
+/* global.css (bottom or anywhere after Tailwind utilities) */
+body {
+  /* prevent any sneaky horizontal scroll bars */
+  overflow-x: hidden;
+}
+
+label, h1,h2,h3,h4,h5 { @apply text-white; }
+
+:root {
   --background: #242526; /* grey background */
   --foreground: #000000; /* black text */
   --font-sans: system-ui, sans-serif;
@@ -31,4 +45,9 @@ label {
   width: 50px;
   background-color: var(--background);
 }
+
+html, body {
+  overflow-y: hidden;
+}
+
 
